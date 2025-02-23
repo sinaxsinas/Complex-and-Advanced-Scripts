@@ -1,0 +1,12 @@
+#!/bin/bash
+backup_file="/backups/backup_latest.tar.gz" 
+restore_dir="/restore"
+
+# Verify integrity
+if md5sum -c "$backup_file.md5"; then
+  tar -xzf $backup_file -C $restore_dir
+  echo "Restore successful to $restore_dir."
+else  
+  echo "Backup integrity verification failed!"     
+  exit 1 
+fi  
