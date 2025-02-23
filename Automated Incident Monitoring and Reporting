@@ -1,0 +1,11 @@
+#!/bin/bash
+log_file="/var/log/syslog"
+incident_log="incident_report.log"
+email="admin@example.com" 
+tail -Fn0 $log_file | while read line; do
+  if echo "$line" | grep -q "ERROR"; then    
+     echo "$line" >> $incident_log 
+     echo "Incident reported: $line"  
+     echo "$line" | mail -s "Incident Alert" $email 
+  fi 
+done 
